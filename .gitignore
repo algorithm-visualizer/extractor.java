@@ -1,0 +1,9 @@
+# IntelliJ
+.idea
+
+# Gradle
+.gradle
+/build/
+
+# Cache of project
+.gradletasknamecache
