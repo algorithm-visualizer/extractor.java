@@ -15,10 +15,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Extractor implements RequestHandler<String, String> {
+public class Extractor implements RequestHandler<String, Response> {
     private static String lambdaTaskRoot = System.getenv("LAMBDA_TASK_ROOT");
 
-    public String handleRequest(String code, Context context) {
+    public Response handleRequest(String code, Context context) {
         try {
             File tmpDir = Files.createTempDirectory("me").toFile();
             File sourceFile = new File(tmpDir.toString(), "Main.java");
@@ -29,9 +29,10 @@ public class Extractor implements RequestHandler<String, String> {
             compile(sourceFile);
             run(tmpDir);
 
-            return new String(Files.readAllBytes(Paths.get(tmpDir.toString(), "visualization.json")));
+            String commands = new String(Files.readAllBytes(Paths.get(tmpDir.toString(), "visualization.json")));
+            return new Response(commands);
         } catch (Exception e) {
-            return e.getMessage();
+            return new Response(e);
         }
     }
 

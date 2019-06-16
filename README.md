@@ -14,7 +14,7 @@
 
     - Handler: `Extractor::handleRequest` 
     
-    - Memory: `256 MB`
+    - Memory: `512 MB`
     
     - Timeout: `10 sec`
     
