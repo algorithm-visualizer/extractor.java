@@ -14,6 +14,10 @@
 
     - Handler: `Extractor::handleRequest` 
     
+    - Memory: `256 MB`
+    
+    - Timeout: `10 sec`
+    
 2. Build this project and update the function.
 
 ```bash
