@@ -1,3 +1,5 @@
+package org.algorithm_visualizer;
+
 public class Response {
     boolean success;
     String errorMessage;

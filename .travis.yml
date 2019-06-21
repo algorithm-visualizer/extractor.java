@@ -1,0 +1,28 @@
+language: java
+jdk: oraclejdk8
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+script: ./gradlew build
+deploy:
+  provider: lambda
+  skip_cleanup: true
+  function_name: extractor-java
+  region: us-east-2
+  role: arn:aws:iam::695208893210:role/lambda-role
+  runtime: java8
+  module_name: org.algorithm_visualizer
+  handler_name: Extractor::handleRequest
+  access_key_id:
+    secure: "FFe07Xd+2/vd0X3HiXFYOSMaYxvV41v3BdGxrL43hUiDFupzbPrPGr+E75ni3FsBJYmQsQnlmd5XQVPLwGIpaTyN24NQMesDI/6wyYhHZr9E+QHBvmCm5HOht/GnR+PYrnqVulOKK69FIt3KrPUtbwILgUQ7jao2EhB4AvVw/Kwy2ZlWEKsUETnWMq3oDWehO3U6yhKbl9xc4O2e2vnftlT+qmwuxK1D/yuAySIulcljM8B6XxivrunlVTRu+zb3l5feqA2/exow4YYfjAm3LprBcDjVCzfDNxYMn1sYFu/bqkGrqUrPbZga5YHS5DhFKWiakwGjITD970eNwZo05vevUjiEF6ACReewKJtOOrJgn1kwKeZ3M8TObLz1dcTXPMwpo9PiIz4HrTarhQzvaUHjgU74R5qizvHugaffM3AIOeOvzYrS5zIePAXwep4pEpghjsFj9wfDM2DQdSGm3qkfw4v0lE+4AakHITvYPhkulTp3ras6qQ+ICGDTSG/hBQJaHHtJJIgKidQRlHY7cWjUqwVVRByFMgVyHdA0jWo/51L6bD7t3+F1IGCZzcY3OX+Dtin55iZAWYH+7W9mMLudcLMsJC7ifFltSeK6auhTx/U9ZJHkzIKbuuZF2dCwxLirbkRcq4C2Y308Xosordf1pce6Dwk/LfWKf9tpkyg="
+  secret_access_key:
+    secure: "LS9tq2v/xPtrtlgDZF9uvtBINPwKsc2dOxlKjI64dHsz4Rv7jO+IxoXJcpxeNut8ulFP4gcLbmyPJaBoytVvMqjh2+hRfU9OlqjEO0avOfA92D8pTJHwD66+HyrMmmf+U5DIL+ytkquyX3RJbrBE/xIRzXgohX3fcY4hQWY2GC3Qr+C/MyNXc2z8S1/ldTTL2aGRkupdc3VlbHm2oOsE4/PkXWAoWxey8SZQbnJ8qpJ6MPwyrAu78DX6JyriVkrrPPiEa4sGk3iEVV9uIYPU+Y5FW858c/c4q0bKhusr9CvI8PVb2ow9CgAbTSqCsJ7kYS3+NXN7n0wLk6yHCg02jQ7E/vymH7LJbV0e3KnffzWdd8Paoenu/HhuDM1g4z7QTcynImmTtRH/pBp3PXFZXGZMRYp+gkPJOqWgNEdNOwa5IM1pPbFUIg5IhOHgGC38aZvXKuf8GLJJW2Y6X+uZXezk6GYdZdUyFnUzzZGi46WutuIx6KZvsBYx2GMYPjxIVCJ1/tIyuyk52Y/uuEBD8xzKfDSRUErdOpMCqRIehZwvZ6/69xU8OAwaH3e34oeNfABZMrMVkMhKbZORBtF006EpBY5fLYCl6g73M/qViHXHx1tJnz1mq6OhTMpvehfnRjaRDTQaSRdaiIkZsc280QIzv+PrQzn5kKaVDJVqxZE="
+  zip: build/distributions/extractor.java.zip
+  timeout: 10
+  memory_size: 512
+  on:
+    branch: master

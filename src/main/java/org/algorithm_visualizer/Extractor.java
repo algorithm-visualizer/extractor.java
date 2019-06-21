@@ -1,3 +1,5 @@
+package org.algorithm_visualizer;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.sun.tools.javac.api.JavacTool;
