@@ -5,13 +5,17 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 dependencies {
-    compile (
-        fileTree(dir: 'jars', include: '*.jar'),
-        'com.amazonaws:aws-lambda-java-core:1.2.0',
-        'com.amazonaws:aws-lambda-java-events:1.2.0',
-        'org.algorithm-visualizer:tracers.java:+'
+    compile(
+            fileTree(dir: 'jars', include: '*.jar'),
+            'com.amazonaws:aws-lambda-java-core:1.2.0',
+            'com.amazonaws:aws-lambda-java-events:1.2.0',
     )
+    compile('org.algorithm-visualizer:tracers.java:+') { changing = true }
 }
 
 task buildZip(type: Zip) {
