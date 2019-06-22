@@ -22,7 +22,7 @@ public class Extractor implements RequestHandler<String, Response> {
 
     public Response handleRequest(String code, Context context) {
         try {
-            File tmpDir = Files.createTempDirectory("me").toFile();
+            File tmpDir = Files.createTempDirectory("extractor-").toFile();
             File sourceFile = new File(tmpDir.toString(), "Main.java");
             Writer output = new BufferedWriter(new FileWriter(sourceFile));
             output.write(code);
