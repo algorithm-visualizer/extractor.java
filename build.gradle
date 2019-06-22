@@ -15,7 +15,9 @@ dependencies {
             'com.amazonaws:aws-lambda-java-core:1.2.0',
             'com.amazonaws:aws-lambda-java-events:1.2.0',
     )
-    compile('org.algorithm-visualizer:tracers.java:+') { changing = true }
+    compile(
+            'org.algorithm-visualizer:tracers.java:' + (System.getenv('TRACERS_VERSION') ?: '+')
+    ) { changing = true }
 }
 
 task buildZip(type: Zip) {
