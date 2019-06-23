@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,12 @@ public class Extractor implements RequestHandler<String, Response> {
             compile(sourceFile);
             run(tmpDir);
 
-            String commands = new String(Files.readAllBytes(Paths.get(tmpDir.toString(), "visualization.json")));
+            Path visualizationPath = Paths.get(tmpDir.toString(), "visualization.json");
+            if (!visualizationPath.toFile().exists())
+                throw new Exception("Visualization Not Found");
+            String commands = new String(Files.readAllBytes(visualizationPath));
             return new Response(commands);
+
         } catch (Exception e) {
             return new Response(e);
         }
